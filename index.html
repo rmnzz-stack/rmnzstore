@@ -3,277 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>rmnzz post akun all game</title>
+    <title>rmnzz store - Marketplace Akun Game</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6; /* Gray-100 */
-        }
-        
-        /* Animasi sederhana untuk kartu */
-        .game-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .game-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Styling kustom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #c1c1c1;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #a8a8a8;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .hide-scroll::-webkit-scrollbar { display: none; }
+        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="text-gray-800">
+<body class="text-gray-800 relative">
 
-    <nav class="bg-indigo-600 text-white shadow-lg sticky top-0 z-50">
+    <!-- Tombol Live Chat Global Admin -->
+    <a id="globalWaBtn" href="#" target="_blank" class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-2xl hover:bg-green-600 transition-all z-40 flex items-center justify-center transform hover:scale-110">
+        <i class="fab fa-whatsapp text-3xl"></i>
+    </a>
+
+    <!-- Navbar -->
+    <nav class="bg-indigo-600 text-white shadow-md sticky top-0 z-30">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <!-- Logo/Brand -->
-                <div class="flex items-center">
-                    <a href="#" class="flex items-center gap-2" onclick="showPage('home')">
-                        <i class="fas fa-gamepad text-2xl text-indigo-200"></i>
-                        <span class="font-bold text-xl tracking-tight">rmnzz<span class="text-indigo-200">store</span></span>
-                    </a>
+                <a href="index.html" class="flex items-center gap-2 font-extrabold text-xl tracking-tight cursor-pointer">
+                    <i class="fas fa-gamepad text-indigo-200"></i> rmnzz<span class="text-indigo-200">store</span>
+                </a>
+                <div class="flex space-x-4">
+                    <a href="index.html" class="text-white border-b-2 border-white px-3 py-2 font-semibold transition-all">Beranda</a>
+                    <a href="admin.html" class="text-indigo-200 border-b-2 border-transparent hover:text-white px-3 py-2 font-semibold transition-all">Admin Panel</a>
                 </div>
-                
-                <!-- Menu Desktop -->
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4">
-                        <button onclick="showPage('home')" class="hover:bg-indigo-500 px-3 py-2 rounded-md text-sm font-medium transition-colors">Beranda</button>
-                        <button onclick="showPage('admin')" class="hover:bg-indigo-500 px-3 py-2 rounded-md text-sm font-medium transition-colors border border-indigo-400">Panel Admin</button>
-                    </div>
-                </div>
-
-                <!-- Tombol Menu Mobile -->
-                <div class="md:hidden flex items-center">
-                    <button onclick="toggleMobileMenu()" class="inline-flex items-center justify-center p-2 rounded-md hover:bg-indigo-500 focus:outline-none">
-                        <i class="fas fa-bars text-xl"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Menu Mobile Dropdown -->
-        <div id="mobile-menu" class="hidden md:hidden bg-indigo-700">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <button onclick="showPage('home'); toggleMobileMenu()" class="block w-full text-left hover:bg-indigo-500 px-3 py-2 rounded-md text-base font-medium">Beranda</button>
-                <button onclick="showPage('admin'); toggleMobileMenu()" class="block w-full text-left bg-indigo-800 hover:bg-indigo-500 px-3 py-2 rounded-md text-base font-medium mt-1">Panel Admin</button>
             </div>
         </div>
     </nav>
 
-    <main id="home-page" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <!-- Header Halaman -->
-        <div class="text-center mb-12">
-            <h1 class="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">Marketplace Akun Game Terpercaya</h1>
-            <p class="text-lg text-gray-600 max-w-2xl mx-auto">Temukan akun impianmu dari berbagai game populer. Transaksi aman, cepat, dan terjamin.</p>
+    <!-- Peringatan / Pengumuman -->
+    <div id="announcementBanner" class="bg-yellow-100 border-b border-yellow-200 text-yellow-800 px-4 py-3 text-center text-sm font-medium hidden"></div>
+
+    <!-- Halaman Utama (Beranda) -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 block">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">Marketplace Akun Game Terpercaya</h1>
+            <p class="text-gray-600 max-w-2xl mx-auto">Temukan akun impianmu dari berbagai game populer. Transaksi aman, cepat, dan terjamin.</p>
         </div>
 
-        <!-- Filter Game (Aktif & Berfungsi) -->
-        <div class="flex flex-wrap justify-center gap-2 mb-8">
-            <button onclick="filterGame('Semua')" class="filter-btn bg-indigo-600 text-white px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold border border-indigo-600 transition-all shadow-sm">Semua Game</button>
-            <button onclick="filterGame('Mobile Legends')" class="filter-btn bg-white text-gray-600 px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium hover:bg-indigo-50 cursor-pointer border border-gray-200 shadow-sm transition-all">Mobile Legends</button>
-            <button onclick="filterGame('Valorant')" class="filter-btn bg-white text-gray-600 px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium hover:bg-indigo-50 cursor-pointer border border-gray-200 shadow-sm transition-all">Valorant</button>
-            <button onclick="filterGame('Free Fire')" class="filter-btn bg-white text-gray-600 px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium hover:bg-indigo-50 cursor-pointer border border-gray-200 shadow-sm transition-all">Free Fire</button>
-            <button onclick="filterGame('Genshin Impact')" class="filter-btn bg-white text-gray-600 px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium hover:bg-indigo-50 cursor-pointer border border-gray-200 shadow-sm transition-all">Genshin Impact</button>
+        <!-- Filter Game -->
+        <div class="flex flex-wrap justify-center gap-2 mb-8" id="filterContainer">
+            <button onclick="filterGame('Semua')" class="filter-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-sm transition-all" data-game="Semua">Semua Game</button>
+            <button onclick="filterGame('Mobile Legends')" class="filter-btn bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 px-4 py-2 rounded-full text-sm font-medium transition-all" data-game="Mobile Legends">Mobile Legends</button>
+            <button onclick="filterGame('Valorant')" class="filter-btn bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 px-4 py-2 rounded-full text-sm font-medium transition-all" data-game="Valorant">Valorant</button>
+            <button onclick="filterGame('Free Fire')" class="filter-btn bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 px-4 py-2 rounded-full text-sm font-medium transition-all" data-game="Free Fire">Free Fire</button>
+            <button onclick="filterGame('Genshin Impact')" class="filter-btn bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 px-4 py-2 rounded-full text-sm font-medium transition-all" data-game="Genshin Impact">Genshin Impact</button>
+            <button onclick="filterGame('Bloodstrike')" class="filter-btn bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 px-4 py-2 rounded-full text-sm font-medium transition-all" data-game="Bloodstrike">Bloodstrike</button>
+            <button onclick="filterGame('Roblox')" class="filter-btn bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 px-4 py-2 rounded-full text-sm font-medium transition-all" data-game="Roblox">Roblox</button>
         </div>
 
-        <!-- Grid Container untuk Kartu Akun (Minimum 2 Kolom Bersampingan) -->
-        <div id="accounts-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
-            <!-- Kartu akan di-render di sini oleh JavaScript -->
-        </div>
-
-        <!-- Pesan jika tidak ada akun -->
-        <div id="empty-state" class="hidden text-center py-20">
-            <i class="fas fa-box-open text-6xl text-gray-300 mb-4"></i>
-            <h3 class="text-xl font-medium text-gray-600">Belum ada akun yang dijual</h3>
-            <p class="text-gray-400 mt-2">Silakan tambah akun melalui Panel Admin.</p>
-        </div>
-    </main>
-
-    <main id="admin-page" class="hidden max-w-3xl mx-auto px-4 sm:px-6 py-10">
-        <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
-            <div class="bg-indigo-600 px-6 py-4">
-                <h2 class="text-2xl font-bold text-white flex items-center gap-2">
-                    <i class="fas fa-plus-circle"></i> Posting Akun Baru
-                </h2>
-                <p class="text-indigo-100 text-sm mt-1">Isi detail akun yang ingin dijual ke dalam katalog.</p>
-            </div>
-            
-            <div class="p-6 sm:p-8">
-                <form id="add-account-form" class="space-y-6">
-                    <!-- Input Nama Game -->
-                    <div>
-                        <label for="gameName" class="block text-sm font-medium text-gray-700 mb-1">Nama Game *</label>
-                        <select id="gameName" required class="w-full rounded-lg border-gray-300 border px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-shadow bg-gray-50 text-gray-900">
-                            <option value="">-- Pilih Game --</option>
-                            <option value="Mobile Legends">Mobile Legends</option>
-                            <option value="Valorant">Valorant</option>
-                            <option value="Free Fire">Free Fire</option>
-                            <option value="PUBG Mobile">PUBG Mobile</option>
-                            <option value="Genshin Impact">Genshin Impact</option>
-                            <option value="Lainnya">Lainnya...</option>
-                        </select>
-                    </div>
-
-                    <!-- Input Judul Postingan -->
-                    <div>
-                        <label for="postTitle" class="block text-sm font-medium text-gray-700 mb-1">Judul Postingan *</label>
-                        <input type="text" id="postTitle" required placeholder="Contoh: Akun Mythic Glory, Skin Legend Gusion" 
-                            class="w-full rounded-lg border-gray-300 border px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-shadow text-gray-900 placeholder-gray-400">
-                    </div>
-
-                    <!-- Input Harga -->
-                    <div>
-                        <label for="price" class="block text-sm font-medium text-gray-700 mb-1">Harga (Rp) *</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <span class="text-gray-500 sm:text-sm">Rp</span>
-                            </div>
-                            <input type="number" id="price" required placeholder="0" min="0" step="1000"
-                                class="w-full rounded-lg border-gray-300 border pl-10 pr-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-shadow text-gray-900">
-                        </div>
-                    </div>
-
-                    <!-- Input Deskripsi/Spesifikasi -->
-                    <div>
-                        <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Spesifikasi Singkat *</label>
-                        <textarea id="description" required rows="3" placeholder="- Winrate 60%&#10;- Total Skin 150&#10;- Login via Moonton"
-                            class="w-full rounded-lg border-gray-300 border px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-shadow text-gray-900 resize-none"></textarea>
-                    </div>
-
-                    <!-- Input URL Gambar Cover -->
-                    <div>
-                        <label for="imageUrl" class="block text-sm font-medium text-gray-700 mb-1">URL Gambar Cover (Opsional)</label>
-                        <p class="text-xs text-gray-500 mb-2">Biarkan kosong untuk menggunakan gambar default berdasarkan game.</p>
-                        <input type="url" id="imageUrl" placeholder="https://example.com/image.jpg"
-                            class="w-full rounded-lg border-gray-300 border px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-shadow text-gray-900">
-                    </div>
-
-                    <!-- Status Akun -->
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Status Ketersediaan</label>
-                        <div class="flex items-center">
-                            <input type="checkbox" id="isAvailable" checked class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded cursor-pointer">
-                            <label for="isAvailable" class="ml-2 block text-sm text-gray-900 cursor-pointer">
-                                Tersedia (Siap Jual)
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Tombol Submit -->
-                    <div class="pt-4 border-t border-gray-100">
-                        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-colors flex justify-center items-center gap-2">
-                            <i class="fas fa-paper-plane"></i> Posting Akun
-                        </button>
-                    </div>
-                </form>
-            </div>
+        <!-- Grid Akun -->
+        <div id="accountsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"></div>
+        
+        <!-- Empty State -->
+        <div id="emptyState" class="hidden text-center py-12">
+            <i class="fas fa-box-open text-5xl text-gray-300 mb-4"></i>
+            <p class="text-gray-500 font-medium">Belum ada akun yang diposting untuk kategori ini.</p>
         </div>
     </main>
 
-    <!-- Kita menggunakan modal kustom sebagai ganti alert() -->
-    <div id="notification-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black bg-opacity-50 backdrop-blur-sm transition-opacity">
-        <div class="bg-white rounded-xl shadow-2xl max-w-sm w-full overflow-hidden transform scale-95 transition-transform" id="modal-content">
-            <div class="p-6 text-center">
-                <div id="modal-icon" class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-4">
-                    <i class="fas fa-check text-2xl text-green-600"></i>
+    <!-- Modal Detail Akun -->
+    <div id="detailModal" class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl relative flex flex-col max-h-[90vh]">
+            <button onclick="closeDetail()" class="absolute top-3 right-3 bg-black bg-opacity-50 text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-opacity-80 z-10 transition-all">
+                <i class="fas fa-times"></i>
+            </button>
+            <div id="modalSlider" class="flex overflow-x-auto snap-x snap-mandatory hide-scroll bg-gray-900 h-64 sm:h-80 w-full relative"></div>
+            <div class="bg-gray-100 text-center text-xs text-gray-500 py-1 font-semibold flex items-center justify-center gap-2">
+                <i class="fas fa-arrows-alt-h"></i> Geser gambar untuk melihat detail
+            </div>
+            <div class="p-5 overflow-y-auto flex-grow">
+                <span id="modalGame" class="bg-indigo-100 text-indigo-800 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider"></span>
+                <h2 id="modalTitle" class="text-xl font-bold text-gray-900 mt-2 leading-tight"></h2>
+                <div id="modalPrice" class="text-2xl font-extrabold text-indigo-600 mt-1 mb-4"></div>
+                <div class="border-t border-gray-200 pt-4">
+                    <h3 class="text-sm font-bold text-gray-900 mb-2">Spesifikasi Akun:</h3>
+                    <p id="modalDesc" class="text-sm text-gray-600 whitespace-pre-wrap leading-relaxed"></p>
                 </div>
-                <h3 id="modal-title" class="text-lg font-bold text-gray-900 mb-2">Berhasil!</h3>
-                <p id="modal-message" class="text-sm text-gray-600 mb-6">Tindakan berhasil dilakukan.</p>
-                <button onclick="closeModal()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition-colors">
-                    Tutup
-                </button>
+            </div>
+            <div class="p-4 border-t border-gray-100 bg-gray-50">
+                <a id="modalWaBtn" href="#" target="_blank" class="block w-full bg-green-500 text-white text-center font-bold py-3 rounded-xl hover:bg-green-600 transition-all shadow-md">
+                    <i class="fab fa-whatsapp text-lg mr-1"></i> Beli via WhatsApp Pemilik
+                </a>
             </div>
         </div>
     </div>
 
     <script>
-        // State Aplikasi (Disimpan di memori browser untuk demonstrasi)
+        let accounts = JSON.parse(localStorage.getItem('rmnzStoreAccounts')) || [];
+        let settings = JSON.parse(localStorage.getItem('rmnzStoreSettings')) || { announcement: "Selamat datang di Rmnzz Store!", globalWa: "6281234567890" };
         let currentFilter = 'Semua';
 
-        let accounts = [
-            {
-                id: 1,
-                game: "Mobile Legends",
-                title: "Akun Mythic Glory, 200 Skin",
-                price: 1500000,
-                description: "- Rank Max: Mythic Glory\n- Hero: Full\n- Skin Legend: Gusion, Granger\n- Login: Moonton Sepaket",
-                imageUrl: "", 
-                isAvailable: true,
-                dateAdded: new Date().toISOString()
-            },
-            {
-                id: 2,
-                game: "Valorant",
-                title: "Akun Radiant, Kuronami Bundle",
-                price: 2300000,
-                description: "- Rank Saat ini: Ascendant 3\n- Bundle: Kuronami, Reaver\n- VP sisa 400\n- Full Akses",
-                imageUrl: "",
-                isAvailable: true,
-                dateAdded: new Date().toISOString()
-            },
-            {
-                id: 3,
-                game: "Genshin Impact",
-                title: "AR 60 Asia, 15 Karakter Bintang 5",
-                price: 850000,
-                description: "- Server: Asia\n- Spiral Abyss 36 Star EZ\n- Pity Weapon: 50\n- Bind: Email Dummy",
-                imageUrl: "",
-                isAvailable: false,
-                dateAdded: new Date().toISOString()
-            }
-        ];
+        function formatRupiah(number) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(number);
+        }
 
-        // Format mata uang Rupiah
-        const formatRupiah = (number) => {
-            return new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR',
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0
-            }).format(number);
-        };
-
-        // Fungsi untuk mendapatkan gambar default berdasarkan nama game
-        const getDefaultImage = (gameName) => {
-            const gameImages = {
-                "Mobile Legends": "https://placehold.co/600x400/1e3a8a/ffffff?text=Mobile+Legends",
-                "Valorant": "https://placehold.co/600x400/ef4444/ffffff?text=Valorant",
-                "Free Fire": "https://placehold.co/600x400/f59e0b/ffffff?text=Free+Fire",
-                "PUBG Mobile": "https://placehold.co/600x400/374151/ffffff?text=PUBG+Mobile",
-                "Genshin Impact": "https://placehold.co/600x400/10b981/ffffff?text=Genshin+Impact"
-            };
+        function renderSettings() {
+            const banner = document.getElementById('announcementBanner');
+            if (settings.announcement.trim() !== "") {
+                banner.innerHTML = `<i class="fas fa-bullhorn mr-2"></i> ${settings.announcement}`;
+                banner.classList.remove('hidden');
+            } else { banner.classList.add('hidden'); }
             
-            return gameImages[gameName] || "https://placehold.co/600x400/4f46e5/ffffff?text=Akun+Game";
-        };
+            const globalWaUrl = `https://wa.me/${settings.globalWa}?text=Halo%20Admin%20rmnzzstore,%20saya%20mau%20tanya...`;
+            document.getElementById('globalWaBtn').href = globalWaUrl;
+        }
 
-        // Fungsi untuk me-render daftar akun ke HTML
-        const renderAccounts = () => {
-            const grid = document.getElementById('accounts-grid');
-            const emptyState = document.getElementById('empty-state');
-            
-            grid.innerHTML = ''; // Bersihkan isi grid sebelumnya
+        function renderAccounts() {
+            const grid = document.getElementById('accountsGrid');
+            const emptyState = document.getElementById('emptyState');
+            grid.innerHTML = '';
 
-            // Filter akun berdasarkan kategori yang dipilih
-            const filteredAccounts = currentFilter === 'Semua' 
-                ? accounts 
-                : accounts.filter(acc => acc.game.toLowerCase() === currentFilter.toLowerCase());
+            const filteredAccounts = currentFilter === 'Semua' ? accounts : accounts.filter(acc => acc.game === currentFilter);
 
             if (filteredAccounts.length === 0) {
                 emptyState.classList.remove('hidden');
@@ -284,158 +129,60 @@
             emptyState.classList.add('hidden');
             grid.classList.remove('hidden');
 
-            // Urutkan akun terbaru di atas
-            const sortedAccounts = [...filteredAccounts].sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded));
-
-            sortedAccounts.forEach(account => {
-                // Tentukan gambar yang dipakai
-                const imageSource = account.imageUrl && account.imageUrl.trim() !== "" 
-                    ? account.imageUrl 
-                    : getDefaultImage(account.game);
-
-                // Badge Status
-                const statusBadge = account.isAvailable 
-                    ? `<span class="absolute top-2 right-2 sm:top-3 sm:right-3 bg-green-500 text-white text-[10px] sm:text-xs font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full shadow">Tersedia</span>`
-                    : `<span class="absolute top-2 right-2 sm:top-3 sm:right-3 bg-red-500 text-white text-[10px] sm:text-xs font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full shadow">Terjual</span>`;
-
-                // Badge Game
-                const gameBadge = `<span class="bg-indigo-100 text-indigo-800 text-[10px] sm:text-xs font-semibold px-2 py-0.5 rounded">${account.game}</span>`;
-
-                // Format deksripsi (ganti newline jadi <br> agar rapi di HTML)
-                const formattedDesc = account.description.replace(/\n/g, '<br>');
-
-                // Buat elemen card HTML (Proporsional & Pas untuk Tampilan Bersampingan)
-                const cardHTML = `
-                    <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 game-card flex flex-col h-full">
-                        <!-- Area Gambar -->
-                        <div class="relative h-32 sm:h-44 w-full bg-gray-200 overflow-hidden group">
-                            <img src="${imageSource}" alt="${account.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.src='https://placehold.co/600x400/4f46e5/ffffff?text=Image+Error'">
-                            ${statusBadge}
+            filteredAccounts.sort((a, b) => b.id - a.id).forEach(account => {
+                const thumbnail = account.images && account.images.length > 0 ? account.images[0] : 'https://via.placeholder.com/300x200?text=No+Image';
+                grid.innerHTML += `
+                    <div onclick="openDetail(${account.id})" class="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 flex flex-col cursor-pointer overflow-hidden border border-gray-100">
+                        <div class="relative h-32 sm:h-40 w-full bg-gray-200">
+                            <img src="${thumbnail}" alt="${account.title}" class="w-full h-full object-cover">
+                            <span class="absolute top-2 right-2 bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm">Tersedia</span>
+                            ${account.images.length > 1 ? `<span class="absolute bottom-2 right-2 bg-black bg-opacity-60 text-white text-[10px] px-2 py-1 rounded"><i class="far fa-images"></i> ${account.images.length}</span>` : ''}
                         </div>
-                        
-                        <!-- Area Konten -->
-                        <div class="p-3 sm:p-5 flex-grow flex flex-col">
-                            <div class="mb-1.5 sm:mb-2">
-                                ${gameBadge}
-                            </div>
-                            <h3 class="text-sm sm:text-base font-bold text-gray-900 leading-snug sm:leading-tight mb-1 sm:mb-2 line-clamp-2">${account.title}</h3>
-                            
-                            <div class="text-indigo-600 font-extrabold text-base sm:text-xl mb-2 sm:mb-3">
-                                ${formatRupiah(account.price)}
-                            </div>
-                            
-                            <div class="text-xs sm:text-sm text-gray-600 mb-3 flex-grow border-t border-gray-100 pt-2 sm:pt-3">
-                                <div class="line-clamp-3 leading-relaxed text-[11px] sm:text-xs text-gray-500">
-                                    ${formattedDesc}
-                                </div>
-                            </div>
-                            
-                            <!-- Tombol Aksi -->
-                            <div class="mt-auto pt-1">
-                                <button class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs sm:text-sm py-2 px-3 rounded-lg transition-colors flex items-center justify-center gap-1.5 shadow-sm ${!account.isAvailable ? 'opacity-50 cursor-not-allowed bg-gray-400 hover:bg-gray-400' : ''}" ${!account.isAvailable ? 'disabled' : ''}>
-                                    ${account.isAvailable ? '<i class="fab fa-whatsapp text-sm sm:text-base"></i> <span>Beli</span>' : '<i class="fas fa-ban"></i> <span>Habis</span>'}
-                                </button>
-                            </div>
+                        <div class="p-3 sm:p-4 flex flex-col flex-grow">
+                            <span class="bg-indigo-100 text-indigo-800 text-[10px] font-bold px-2 py-0.5 rounded w-max mb-2 uppercase">${account.game}</span>
+                            <h3 class="text-sm sm:text-base font-bold text-gray-900 leading-tight mb-1 line-clamp-2">${account.title}</h3>
+                            <div class="text-indigo-600 font-extrabold text-base sm:text-lg mb-2">${formatRupiah(account.price)}</div>
+                            <div class="text-xs text-gray-500 line-clamp-2 mt-auto mb-3">${account.description}</div>
+                            <button class="w-full bg-indigo-50 text-indigo-600 border border-indigo-100 hover:bg-indigo-600 hover:text-white font-semibold py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm transition-all">Lihat Detail</button>
                         </div>
                     </div>
                 `;
-                
-     // Masukkan elemen card yang sudah dibuat ke dalam wadah grid
-        grid.innerHTML += cardHTML;
-    });
-}
+            });
+        }
 
-// --- FUNGSI NAVIGASI TAB ---
-function switchTab(tabId) {
-    const homeTab = document.getElementById('homeTab');
-    const adminTab = document.getElementById('adminTab');
-    const navHome = document.getElementById('navHome');
-    const navAdmin = document.getElementById('navAdmin');
+        function filterGame(gameName) {
+            currentFilter = gameName;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.className = btn.dataset.game === gameName 
+                    ? 'filter-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-sm transition-all'
+                    : 'filter-btn bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 px-4 py-2 rounded-full text-sm font-medium transition-all';
+            });
+            renderAccounts();
+        }
 
-    if (tabId === 'home') {
-        homeTab.classList.remove('hidden');
-        adminTab.classList.add('hidden');
-        // Styling tombol aktif
-        navHome.classList.add('text-indigo-600', 'border-indigo-600');
-        navHome.classList.remove('text-gray-500', 'border-transparent', 'hover:text-gray-700');
-        navAdmin.classList.add('text-gray-500', 'border-transparent', 'hover:text-gray-700');
-        navAdmin.classList.remove('text-indigo-600', 'border-indigo-600');
-    } else {
-        homeTab.classList.add('hidden');
-        adminTab.classList.remove('hidden');
-        // Styling tombol aktif
-        navAdmin.classList.add('text-indigo-600', 'border-indigo-600');
-        navAdmin.classList.remove('text-gray-500', 'border-transparent', 'hover:text-gray-700');
-        navHome.classList.add('text-gray-500', 'border-transparent', 'hover:text-gray-700');
-        navHome.classList.remove('text-indigo-600', 'border-indigo-600');
-    }
-}
+        function openDetail(id) {
+            const account = accounts.find(acc => acc.id === id);
+            if (!account) return;
+            const slider = document.getElementById('modalSlider');
+            slider.innerHTML = '';
+            account.images.forEach(imgBase64 => {
+                slider.innerHTML += `<div class="min-w-full snap-center h-full flex items-center justify-center"><img src="${imgBase64}" class="w-full h-full object-contain"></div>`;
+            });
+            document.getElementById('modalGame').innerText = account.game;
+            document.getElementById('modalTitle').innerText = account.title;
+            document.getElementById('modalPrice').innerText = formatRupiah(account.price);
+            document.getElementById('modalDesc').innerText = account.description;
+            document.getElementById('modalWaBtn').href = `https://wa.me/${account.ownerWa}?text=Halo,%20saya%20ingin%20membeli%20akun%20${encodeURIComponent(account.game)}%20:%20*${encodeURIComponent(account.title)}*%20dengan%20harga%20${formatRupiah(account.price)}.%20Apakah%20masih%20tersedia?`;
+            document.getElementById('detailModal').classList.remove('hidden');
+            document.getElementById('detailModal').classList.add('flex');
+        }
 
-// --- FUNGSI FILTER GAME ---
-function filterGame(gameName) {
-    currentFilter = gameName;
-    renderAccounts();
-}
+        function closeDetail() {
+            document.getElementById('detailModal').classList.add('hidden');
+            document.getElementById('detailModal').classList.remove('flex');
+        }
 
-// --- FUNGSI MODAL NOTIFIKASI ---
-function showModal() {
-    const modal = document.getElementById('successModal');
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
-    
-    // Otomatis tutup modal & pindah ke beranda setelah 2 detik
-    setTimeout(() => {
-        closeModal();
-        switchTab('home');
-    }, 2000);
-}
-
-function closeModal() {
-    const modal = document.getElementById('successModal');
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
-}
-
-// --- HANDLE SUBMIT FORM ADMIN ---
-document.getElementById('addAccountForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    // Ambil data dari input form
-    const game = document.getElementById('gameInput').value;
-    const title = document.getElementById('titleInput').value;
-    const price = document.getElementById('priceInput').value;
-    const description = document.getElementById('descInput').value;
-    const imageUrl = document.getElementById('imageInput').value;
-    const status = document.getElementById('statusInput').value;
-
-    // Buat objek akun baru
-    const newAccount = {
-        id: Date.now(), // Gunakan timestamp sebagai ID unik
-        game: game,
-        title: title,
-        price: parseInt(price),
-        description: description,
-        imageUrl: imageUrl,
-        isAvailable: status === 'Tersedia',
-        dateAdded: new Date().toISOString()
-    };
-
-    // Tambahkan ke array data utama
-    accounts.push(newAccount);
-
-    // Render ulang tampilan agar akun baru muncul
-    renderAccounts();
-
-    // Tampilkan notifikasi berhasil
-    showModal();
-
-    // Kosongkan form setelah disubmit
-    this.reset();
-});
-
-// Jalankan render pertama kali saat website dimuat
-renderAccounts();
-
-</script>
+        window.onload = () => { renderSettings(); renderAccounts(); };
+    </script>
 </body>
 </html>
