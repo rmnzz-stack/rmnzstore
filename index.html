@@ -8,81 +8,83 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #f8fafc; }
         .hide-scroll::-webkit-scrollbar { display: none; }
         .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="text-gray-800 relative">
+<body class="bg-slate-900 text-slate-100 relative min-h-screen">
 
     <!-- Tombol Live Chat Global Admin -->
-    <a id="globalWaBtn" href="#" target="_blank" class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-2xl hover:bg-green-600 transition-all z-40 flex items-center justify-center transform hover:scale-110 hidden">
+    <a id="globalWaBtn" href="#" target="_blank" class="fixed bottom-6 right-6 bg-emerald-500 text-white p-4 rounded-full shadow-lg shadow-emerald-500/30 hover:bg-emerald-600 transition-all z-40 flex items-center justify-center transform hover:scale-110 hidden">
         <i class="fab fa-whatsapp text-3xl"></i>
     </a>
 
-    <!-- Navbar Bersih dengan Logo Besar & Tengah -->
-    <nav class="bg-indigo-600 text-white shadow-md sticky top-0 z-30">
+    <!-- Navbar Bersih (Tanpa Sticky - Tidak Ikut Scroll Ke Bawah) -->
+    <nav class="bg-slate-800/90 border-b border-slate-700/80 text-white shadow-lg relative z-30">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-center py-4">
+            <div class="flex items-center justify-center py-5">
                 <a href="index.html" id="brandLogo" class="flex items-center justify-center cursor-pointer font-extrabold text-2xl md:text-3xl tracking-tight transition-transform duration-200 hover:scale-105">
-                    <i class="fas fa-gamepad text-indigo-200 mr-2"></i> rmnzz<span class="text-indigo-200">store</span>
+                    <i class="fas fa-gamepad text-indigo-400 mr-2"></i> rmnzz<span class="text-indigo-400">store</span>
                 </a>
             </div>
         </div>
     </nav>
 
     <!-- Peringatan / Pengumuman -->
-    <div id="announcementBanner" class="bg-yellow-100 border-b border-yellow-200 text-yellow-800 px-4 py-3 text-center text-sm font-medium hidden"></div>
+    <div id="announcementBanner" class="bg-amber-500/10 border-b border-amber-500/20 text-amber-300 px-4 py-3 text-center text-sm font-medium hidden"></div>
 
     <!-- Halaman Utama (Beranda) -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 block">
         <div class="text-center mb-8">
-            <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">Marketplace Akun Game Terpercaya</h1>
-            <p class="text-gray-600 max-w-2xl mx-auto">Temukan akun impianmu dari berbagai game populer. Transaksi aman, cepat, dan terjamin.</p>
+            <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-3 tracking-tight">Marketplace Akun Game Terpercaya</h1>
+            <p class="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">Temukan akun impianmu dari berbagai game populer. Transaksi aman, cepat, dan terjamin kualitasnya.</p>
         </div>
 
-        <!-- Filter Game -->
+        <!-- Filter Game (Termasuk FC Mobile & eFootball) -->
         <div class="flex flex-wrap justify-center gap-2 mb-8" id="filterContainer">
-            <button onclick="filterGame('Semua')" class="filter-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-sm transition-all" data-game="Semua">Semua Game</button>
-            <button onclick="filterGame('Mobile Legends')" class="filter-btn bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 px-4 py-2 rounded-full text-sm font-medium transition-all" data-game="Mobile Legends">Mobile Legends</button>
-            <button onclick="filterGame('Valorant')" class="filter-btn bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 px-4 py-2 rounded-full text-sm font-medium transition-all" data-game="Valorant">Valorant</button>
-            <button onclick="filterGame('Free Fire')" class="filter-btn bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 px-4 py-2 rounded-full text-sm font-medium transition-all" data-game="Free Fire">Free Fire</button>
-            <button onclick="filterGame('Genshin Impact')" class="filter-btn bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 px-4 py-2 rounded-full text-sm font-medium transition-all" data-game="Genshin Impact">Genshin Impact</button>
-            <button onclick="filterGame('Bloodstrike')" class="filter-btn bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 px-4 py-2 rounded-full text-sm font-medium transition-all" data-game="Bloodstrike">Bloodstrike</button>
-            <button onclick="filterGame('Roblox')" class="filter-btn bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 px-4 py-2 rounded-full text-sm font-medium transition-all" data-game="Roblox">Roblox</button>
+            <button onclick="filterGame('Semua')" class="filter-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg shadow-indigo-500/25 transition-all" data-game="Semua">Semua Game</button>
+            <button onclick="filterGame('Mobile Legends')" class="filter-btn bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 px-4 py-2 rounded-full text-sm font-medium transition-all" data-game="Mobile Legends">Mobile Legends</button>
+            <button onclick="filterGame('Valorant')" class="filter-btn bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 px-4 py-2 rounded-full text-sm font-medium transition-all" data-game="Valorant">Valorant</button>
+            <button onclick="filterGame('Free Fire')" class="filter-btn bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 px-4 py-2 rounded-full text-sm font-medium transition-all" data-game="Free Fire">Free Fire</button>
+            <button onclick="filterGame('Genshin Impact')" class="filter-btn bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 px-4 py-2 rounded-full text-sm font-medium transition-all" data-game="Genshin Impact">Genshin Impact</button>
+            <button onclick="filterGame('Bloodstrike')" class="filter-btn bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 px-4 py-2 rounded-full text-sm font-medium transition-all" data-game="Bloodstrike">Bloodstrike</button>
+            <button onclick="filterGame('Roblox')" class="filter-btn bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 px-4 py-2 rounded-full text-sm font-medium transition-all" data-game="Roblox">Roblox</button>
+            <button onclick="filterGame('FC Mobile')" class="filter-btn bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 px-4 py-2 rounded-full text-sm font-medium transition-all" data-game="FC Mobile">FC Mobile</button>
+            <button onclick="filterGame('eFootball')" class="filter-btn bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 px-4 py-2 rounded-full text-sm font-medium transition-all" data-game="eFootball">eFootball</button>
         </div>
 
         <!-- Grid Akun -->
         <div id="accountsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"></div>
         
         <!-- Empty State -->
-        <div id="emptyState" class="hidden text-center py-12">
-            <i class="fas fa-box-open text-5xl text-gray-300 mb-4"></i>
-            <p class="text-gray-500 font-medium">Belum ada akun yang diposting untuk kategori ini.</p>
+        <div id="emptyState" class="hidden text-center py-16">
+            <i class="fas fa-box-open text-6xl text-slate-700 mb-4 inline-block"></i>
+            <p class="text-slate-400 font-medium">Belum ada akun yang diposting untuk kategori ini.</p>
         </div>
     </main>
 
-    <!-- Modal Detail Akun -->
-    <div id="detailModal" class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden items-center justify-center p-4">
-        <div class="bg-white rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl relative flex flex-col max-h-[90vh]">
-            <button onclick="closeDetail()" class="absolute top-3 right-3 bg-black bg-opacity-50 text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-opacity-80 z-10 transition-all">
+    <!-- Modal Detail Akun Dark Modern -->
+    <div id="detailModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-slate-800 border border-slate-700 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl relative flex flex-col max-h-[90vh]">
+            <button onclick="closeDetail()" class="absolute top-3 right-3 bg-slate-900/80 text-slate-300 hover:text-white w-8 h-8 rounded-full flex items-center justify-center border border-slate-700 z-10 transition-all">
                 <i class="fas fa-times"></i>
             </button>
-            <div id="modalSlider" class="flex overflow-x-auto snap-x snap-mandatory hide-scroll bg-gray-900 h-64 sm:h-80 w-full relative"></div>
-            <div class="bg-gray-100 text-center text-xs text-gray-500 py-1 font-semibold flex items-center justify-center gap-2">
-                <i class="fas fa-arrows-alt-h"></i> Geser gambar untuk melihat detail
+            <div id="modalSlider" class="flex overflow-x-auto snap-x snap-mandatory hide-scroll bg-slate-950 h-64 sm:h-80 w-full relative"></div>
+            <div class="bg-slate-900/90 text-center text-xs text-slate-400 py-1.5 font-semibold flex items-center justify-center gap-2 border-b border-slate-700/60">
+                <i class="fas fa-arrows-alt-h text-indigo-400"></i> Geser gambar untuk melihat detail
             </div>
             <div class="p-5 overflow-y-auto flex-grow">
-                <span id="modalGame" class="bg-indigo-100 text-indigo-800 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider"></span>
-                <h2 id="modalTitle" class="text-xl font-bold text-gray-900 mt-2 leading-tight"></h2>
-                <div id="modalPrice" class="text-2xl font-extrabold text-indigo-600 mt-1 mb-4"></div>
-                <div class="border-t border-gray-200 pt-4">
-                    <h3 class="text-sm font-bold text-gray-900 mb-2">Spesifikasi Akun:</h3>
-                    <p id="modalDesc" class="text-sm text-gray-600 whitespace-pre-wrap leading-relaxed"></p>
+                <span id="modalGame" class="bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-[10px] font-bold px-2.5 py-1 rounded uppercase tracking-wider"></span>
+                <h2 id="modalTitle" class="text-xl font-bold text-white mt-3 leading-tight"></h2>
+                <div id="modalPrice" class="text-2xl font-extrabold text-indigo-400 mt-1 mb-4"></div>
+                <div class="border-t border-slate-700/80 pt-4">
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Spesifikasi Akun:</h3>
+                    <p id="modalDesc" class="text-sm text-slate-300 whitespace-pre-wrap leading-relaxed font-light"></p>
                 </div>
             </div>
-            <div class="p-4 border-t border-gray-100 bg-gray-50">
-                <a id="modalWaBtn" href="#" target="_blank" class="block w-full bg-green-500 text-white text-center font-bold py-3 rounded-xl hover:bg-green-600 transition-all shadow-md">
+            <div class="p-4 border-t border-slate-700/80 bg-slate-900/50">
+                <a id="modalWaBtn" href="#" target="_blank" class="block w-full bg-emerald-500 hover:bg-emerald-600 text-white text-center font-bold py-3 rounded-xl transition-all shadow-lg shadow-emerald-500/20">
                     <i class="fab fa-whatsapp text-lg mr-1"></i> Beli via WhatsApp Pemilik
                 </a>
             </div>
@@ -113,7 +115,7 @@
         function renderSettings() {
             const banner = document.getElementById('announcementBanner');
             if (settings && settings.announcement && settings.announcement.trim() !== "") {
-                banner.innerHTML = `<i class="fas fa-bullhorn mr-2"></i> ${settings.announcement}`;
+                banner.innerHTML = `<i class="fas fa-bullhorn mr-2 text-amber-400"></i> ${settings.announcement}`;
                 banner.classList.remove('hidden');
             } else { 
                 banner.classList.add('hidden'); 
@@ -132,10 +134,9 @@
 
             const brandLogo = document.getElementById('brandLogo');
             if (settings && settings.logo && settings.logo.trim() !== "") {
-                // Tampilkan gambar dengan ukuran jauh lebih besar (tinggi maksimal 80px / max-h-20)
                 brandLogo.innerHTML = `<img src="${settings.logo}" alt="rmnzz store logo" class="h-14 sm:h-16 md:h-20 w-auto object-contain">`;
             } else {
-                brandLogo.innerHTML = `<i class="fas fa-gamepad text-indigo-200 mr-2"></i> rmnzz<span class="text-indigo-200">store</span>`;
+                brandLogo.innerHTML = `<i class="fas fa-gamepad text-indigo-400 mr-2"></i> rmnzz<span class="text-indigo-400">store</span>`;
             }
         }
 
@@ -158,18 +159,18 @@
             filteredAccounts.sort((a, b) => b.id - a.id).forEach(account => {
                 const thumbnail = account.images && account.images.length > 0 ? account.images[0] : 'https://via.placeholder.com/300x200?text=No+Image';
                 grid.innerHTML += `
-                    <div onclick="openDetail(${account.id})" class="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 flex flex-col cursor-pointer overflow-hidden border border-gray-100">
-                        <div class="relative h-32 sm:h-40 w-full bg-gray-200">
-                            <img src="${thumbnail}" alt="${account.title}" class="w-full h-full object-cover">
-                            <span class="absolute top-2 right-2 bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm">Tersedia</span>
-                            ${account.images && account.images.length > 1 ? `<span class="absolute bottom-2 right-2 bg-black bg-opacity-60 text-white text-[10px] px-2 py-1 rounded"><i class="far fa-images"></i> ${account.images.length}</span>` : ''}
+                    <div onclick="openDetail(${account.id})" class="bg-slate-800 rounded-xl shadow-lg hover:shadow-indigo-500/10 hover:border-slate-600 transition-all duration-300 flex flex-col cursor-pointer overflow-hidden border border-slate-700/80 group">
+                        <div class="relative h-32 sm:h-40 w-full bg-slate-900 overflow-hidden">
+                            <img src="${thumbnail}" alt="${account.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <span class="absolute top-2 right-2 bg-emerald-500/90 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm">Tersedia</span>
+                            ${account.images && account.images.length > 1 ? `<span class="absolute bottom-2 right-2 bg-slate-950/80 backdrop-blur-sm text-slate-200 text-[10px] px-2 py-1 rounded border border-slate-700/50"><i class="far fa-images text-indigo-400"></i> ${account.images.length}</span>` : ''}
                         </div>
                         <div class="p-3 sm:p-4 flex flex-col flex-grow">
-                            <span class="bg-indigo-100 text-indigo-800 text-[10px] font-bold px-2 py-0.5 rounded w-max mb-2 uppercase">${account.game}</span>
-                            <h3 class="text-sm sm:text-base font-bold text-gray-900 leading-tight mb-1 line-clamp-2">${account.title}</h3>
-                            <div class="text-indigo-600 font-extrabold text-base sm:text-lg mb-2">${formatRupiah(account.price)}</div>
-                            <div class="text-xs text-gray-500 line-clamp-2 mt-auto mb-3">${account.description}</div>
-                            <button class="w-full bg-indigo-50 text-indigo-600 border border-indigo-100 hover:bg-indigo-600 hover:text-white font-semibold py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm transition-all">Lihat Detail</button>
+                            <span class="bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-[10px] font-bold px-2 py-0.5 rounded w-max mb-2 uppercase tracking-wider">${account.game}</span>
+                            <h3 class="text-sm sm:text-base font-bold text-slate-100 leading-tight mb-1 line-clamp-2 group-hover:text-indigo-300 transition-colors">${account.title}</h3>
+                            <div class="text-indigo-400 font-extrabold text-base sm:text-lg mb-2">${formatRupiah(account.price)}</div>
+                            <div class="text-xs text-slate-400 line-clamp-2 mt-auto mb-3 font-light">${account.description}</div>
+                            <button class="w-full bg-slate-700/50 text-indigo-300 border border-slate-600/80 hover:bg-indigo-600 hover:text-white hover:border-indigo-600 font-semibold py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm transition-all shadow-sm">Lihat Detail</button>
                         </div>
                     </div>
                 `;
@@ -180,8 +181,8 @@
             currentFilter = gameName;
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.className = btn.dataset.game === gameName 
-                    ? 'filter-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-sm transition-all'
-                    : 'filter-btn bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 px-4 py-2 rounded-full text-sm font-medium transition-all';
+                    ? 'filter-btn bg-indigo-600 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg shadow-indigo-500/25 transition-all'
+                    : 'filter-btn bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 px-4 py-2 rounded-full text-sm font-medium transition-all';
             });
             renderAccounts();
         }
