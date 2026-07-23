@@ -16,20 +16,16 @@
 <body class="text-gray-800 relative">
 
     <!-- Tombol Live Chat Global Admin -->
-    <a id="globalWaBtn" href="#" target="_blank" class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-2xl hover:bg-green-600 transition-all z-40 flex items-center justify-center transform hover:scale-110">
+    <a id="globalWaBtn" href="#" target="_blank" class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-2xl hover:bg-green-600 transition-all z-40 flex items-center justify-center transform hover:scale-110 hidden">
         <i class="fab fa-whatsapp text-3xl"></i>
     </a>
 
-    <!-- Navbar Bersih dengan Logo Lebih Besar -->
+    <!-- Navbar Bersih dengan Logo Besar & Tengah -->
     <nav class="bg-indigo-600 text-white shadow-md sticky top-0 z-30">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Mengganti h-16 dengan py-3 sm:py-4 agar tinggi navbar menyesuaikan ukuran logo -->
-            <div class="flex items-center justify-center sm:justify-start py-3 sm:py-4">
-                <a href="index.html" class="flex items-center cursor-pointer">
-                    <!-- Ganti "nama-file-logo-anda.png" dengan link/nama file foto logo Anda -->
-                    <!-- Kelas h-14 (56px) sm:h-16 (64px) akan membuat logo jauh lebih besar -->
-                    <!-- Tambahkan hover:scale-105 untuk efek membesar sedikit saat disentuh -->
-                    <img src="nama-file-logo-anda.png" alt="rmnzz store logo" class="h-14 sm:h-16 md:h-18 object-contain transition-transform duration-200 hover:scale-105">
+            <div class="flex items-center justify-center py-4">
+                <a href="index.html" id="brandLogo" class="flex items-center justify-center cursor-pointer font-extrabold text-2xl md:text-3xl tracking-tight transition-transform duration-200 hover:scale-105">
+                    <i class="fas fa-gamepad text-indigo-200 mr-2"></i> rmnzz<span class="text-indigo-200">store</span>
                 </a>
             </div>
         </div>
@@ -94,40 +90,52 @@
     </div>
 
     <script>
-        let accounts = JSON.parse(localStorage.getItem('rmnzStoreAccounts')) || [];
-        // Tambahkan properti logo
-        let settings = JSON.parse(localStorage.getItem('rmnzStoreSettings')) || { announcement: "", globalWa: "", logo: "" };
+        let accounts = [];
+        let settings = { announcement: "", globalWa: "", logo: "" };
         let currentFilter = 'Semua';
 
         function formatRupiah(number) {
             return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(number);
         }
 
+        function loadData() {
+            try {
+                const storedAccounts = localStorage.getItem('rmnzStoreAccounts');
+                if (storedAccounts) accounts = JSON.parse(storedAccounts);
+                
+                const storedSettings = localStorage.getItem('rmnzStoreSettings');
+                if (storedSettings) settings = JSON.parse(storedSettings);
+            } catch (e) {
+                console.error("Gagal membaca memori browser", e);
+            }
+        }
+
         function renderSettings() {
             const banner = document.getElementById('announcementBanner');
-            if (settings.announcement && settings.announcement.trim() !== "") {
+            if (settings && settings.announcement && settings.announcement.trim() !== "") {
                 banner.innerHTML = `<i class="fas fa-bullhorn mr-2"></i> ${settings.announcement}`;
                 banner.classList.remove('hidden');
-            } else { banner.classList.add('hidden'); }
+            } else { 
+                banner.classList.add('hidden'); 
+            }
             
-            if(settings.globalWa) {
+            const globalBtn = document.getElementById('globalWaBtn');
+            if(settings && settings.globalWa && settings.globalWa.toString().trim() !== "") {
                 const globalWaUrl = `https://wa.me/${settings.globalWa}?text=Halo%20Admin%20rmnzzstore,%20saya%20mau%20tanya...`;
-                document.getElementById('globalWaBtn').href = globalWaUrl;
-                document.getElementById('globalWaBtn').classList.remove('hidden');
-                document.getElementById('globalWaBtn').classList.add('flex');
+                globalBtn.href = globalWaUrl;
+                globalBtn.classList.remove('hidden');
+                globalBtn.classList.add('flex');
             } else {
-                document.getElementById('globalWaBtn').classList.add('hidden');
-                document.getElementById('globalWaBtn').classList.remove('flex');
+                globalBtn.classList.add('hidden');
+                globalBtn.classList.remove('flex');
             }
 
-            // Render Logo Custom
             const brandLogo = document.getElementById('brandLogo');
-            if (settings.logo && settings.logo.trim() !== "") {
-                // Tampilkan gambar logo (GIF/PNG/JPG) jika diatur dari admin
-                brandLogo.innerHTML = `<img src="${settings.logo}" alt="rmnzz store logo" class="h-10 w-auto object-contain rounded">`;
+            if (settings && settings.logo && settings.logo.trim() !== "") {
+                // Tampilkan gambar dengan ukuran jauh lebih besar (tinggi maksimal 80px / max-h-20)
+                brandLogo.innerHTML = `<img src="${settings.logo}" alt="rmnzz store logo" class="h-14 sm:h-16 md:h-20 w-auto object-contain">`;
             } else {
-                // Tampilkan logo teks default jika belum disetel
-                brandLogo.innerHTML = `<i class="fas fa-gamepad text-indigo-200"></i> rmnzz<span class="text-indigo-200">store</span>`;
+                brandLogo.innerHTML = `<i class="fas fa-gamepad text-indigo-200 mr-2"></i> rmnzz<span class="text-indigo-200">store</span>`;
             }
         }
 
@@ -138,7 +146,7 @@
 
             const filteredAccounts = currentFilter === 'Semua' ? accounts : accounts.filter(acc => acc.game === currentFilter);
 
-            if (filteredAccounts.length === 0) {
+            if (!filteredAccounts || filteredAccounts.length === 0) {
                 emptyState.classList.remove('hidden');
                 grid.classList.add('hidden');
                 return;
@@ -154,7 +162,7 @@
                         <div class="relative h-32 sm:h-40 w-full bg-gray-200">
                             <img src="${thumbnail}" alt="${account.title}" class="w-full h-full object-cover">
                             <span class="absolute top-2 right-2 bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm">Tersedia</span>
-                            ${account.images.length > 1 ? `<span class="absolute bottom-2 right-2 bg-black bg-opacity-60 text-white text-[10px] px-2 py-1 rounded"><i class="far fa-images"></i> ${account.images.length}</span>` : ''}
+                            ${account.images && account.images.length > 1 ? `<span class="absolute bottom-2 right-2 bg-black bg-opacity-60 text-white text-[10px] px-2 py-1 rounded"><i class="far fa-images"></i> ${account.images.length}</span>` : ''}
                         </div>
                         <div class="p-3 sm:p-4 flex flex-col flex-grow">
                             <span class="bg-indigo-100 text-indigo-800 text-[10px] font-bold px-2 py-0.5 rounded w-max mb-2 uppercase">${account.game}</span>
@@ -183,9 +191,11 @@
             if (!account) return;
             const slider = document.getElementById('modalSlider');
             slider.innerHTML = '';
-            account.images.forEach(imgBase64 => {
-                slider.innerHTML += `<div class="min-w-full snap-center h-full flex items-center justify-center"><img src="${imgBase64}" class="w-full h-full object-contain"></div>`;
-            });
+            if (account.images && account.images.length > 0) {
+                account.images.forEach(imgBase64 => {
+                    slider.innerHTML += `<div class="min-w-full snap-center h-full flex items-center justify-center"><img src="${imgBase64}" class="w-full h-full object-contain"></div>`;
+                });
+            }
             document.getElementById('modalGame').innerText = account.game;
             document.getElementById('modalTitle').innerText = account.title;
             document.getElementById('modalPrice').innerText = formatRupiah(account.price);
@@ -200,7 +210,11 @@
             document.getElementById('detailModal').classList.remove('flex');
         }
 
-        window.onload = () => { renderSettings(); renderAccounts(); };
+        window.onload = () => { 
+            loadData();
+            renderSettings(); 
+            renderAccounts(); 
+        };
     </script>
 </body>
 </html>
