@@ -44,11 +44,13 @@
                     <label class="block text-sm font-semibold text-gray-700 mb-1">Nomor WA Admin (Untuk Tombol Chat Mengambang)</label>
                     <input type="number" id="globalWaInput" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 text-sm" placeholder="Contoh: 6281234567890">
                 </div>
-                <!-- Input Logo Ditambahkan Di Sini -->
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1">Logo Website (Format GIF / PNG / JPG)</label>
                     <input type="file" id="logoInput" accept="image/*" class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm bg-gray-50">
-                    <p class="text-xs text-gray-500 mt-1">Upload file GIF agar logo bergerak. Kosongkan jika tidak ingin mengubah logo saat ini.</p>
+                    <div class="flex items-center justify-between mt-2">
+                        <p class="text-xs text-gray-500">Upload file untuk mengganti logo. Kosongkan jika tidak ingin mengubah.</p>
+                        <button type="button" onclick="deleteLogo()" class="text-xs text-red-600 hover:text-red-800 font-semibold underline">Hapus Logo Custom</button>
+                    </div>
                 </div>
                 <button type="submit" id="saveSettingsBtn" class="bg-gray-800 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-gray-900 transition-all">Simpan Pengaturan</button>
             </form>
@@ -97,16 +99,27 @@
     </main>
 
     <script>
-        let accounts = JSON.parse(localStorage.getItem('rmnzStoreAccounts')) || [];
-        // Tambahkan logo di inisiasi default
-        let settings = JSON.parse(localStorage.getItem('rmnzStoreSettings')) || { announcement: "", globalWa: "", logo: "" };
+        let accounts = [];
+        let settings = { announcement: "", globalWa: "", logo: "" };
+
+        function loadAdminData() {
+            try {
+                const storedAccounts = localStorage.getItem('rmnzStoreAccounts');
+                if (storedAccounts) accounts = JSON.parse(storedAccounts);
+                
+                const storedSettings = localStorage.getItem('rmnzStoreSettings');
+                if (storedSettings) settings = JSON.parse(storedSettings);
+            } catch (e) {
+                console.error("Error loading data", e);
+            }
+        }
 
         window.onload = () => {
+            loadAdminData();
             document.getElementById('announceInput').value = settings.announcement || "";
             document.getElementById('globalWaInput').value = settings.globalWa || "";
         };
 
-        // Fungsi membaca file gambar tanpa kompresi agar GIF tetap bergerak
         const fileToBase64 = (file) => {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -116,7 +129,14 @@
             });
         };
 
-        // Update Pengaturan (Dengan Logo)
+        function deleteLogo() {
+            if (confirm("Apakah Anda yakin ingin menghapus logo custom dan kembali ke logo teks default?")) {
+                settings.logo = "";
+                localStorage.setItem('rmnzStoreSettings', JSON.stringify(settings));
+                alert("Logo custom dihapus. Silakan cek halaman utama.");
+            }
+        }
+
         document.getElementById('settingsForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const btn = document.getElementById('saveSettingsBtn');
@@ -129,7 +149,6 @@
             const logoFile = document.getElementById('logoInput').files[0];
             if (logoFile) {
                 try {
-                    // Gunakan pembaca base64 biasa
                     settings.logo = await fileToBase64(logoFile);
                 } catch (error) {
                     alert("Gagal memproses gambar logo.");
@@ -141,13 +160,12 @@
 
             localStorage.setItem('rmnzStoreSettings', JSON.stringify(settings));
             alert("Pengaturan Berhasil Disimpan! Cek Halaman Utama.");
-            document.getElementById('logoInput').value = ""; // Reset file input
+            document.getElementById('logoInput').value = "";
 
             btn.innerText = "Simpan Pengaturan";
             btn.disabled = false;
         });
 
-        // FUNGSI LAMA: Kompresi Gambar untuk postingan akun agar tidak kepenuhan storage
         const compressImage = (file) => {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -157,7 +175,6 @@
                     img.src = event.target.result;
                     img.onload = () => {
                         const canvas = document.createElement('canvas');
-                        // Batasi ukuran maksimal lebar 600px
                         const maxWidth = 600;
                         let width = img.width;
                         let height = img.height;
@@ -171,8 +188,6 @@
                         canvas.height = height;
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, width, height);
-
-                        // Kompres ke format JPEG dengan kualitas 70% (ukuran jadi sangat kecil)
                         resolve(canvas.toDataURL('image/jpeg', 0.7));
                     };
                     img.onerror = error => reject(error);
@@ -181,7 +196,6 @@
             });
         };
 
-        // Submit Postingan Akun
         document.getElementById('addAccountForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
@@ -192,7 +206,6 @@
                 const files = document.getElementById('imageInput').files;
                 let base64Images = [];
                 for (let i = 0; i < files.length; i++) {
-                    // Gunakan fungsi kompresi gambar
                     base64Images.push(await compressImage(files[i]));
                 }
 
@@ -222,4 +235,3 @@
     </script>
 </body>
 </html>
-
